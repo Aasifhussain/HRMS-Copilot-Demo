@@ -149,12 +149,12 @@ export default function Timesheet() {
 
   const weekDates = DAYS.map((_, i) => addDays(weekStart, i));
 
-  const [employeeId, setEmployeeId] = useState("");
-  const [employeeIdM, setEmployeeIdM] = useState("");
-  const [employeeName, setEmployeeName] = useState("");
-  const [submittedBy, setSubmittedBy] = useState("");
-  const [managerEmail, setManagerEmail] = useState("");
-  const [counter, setCounter] = useState("");
+  const employeeId = "RC-10045";
+  const employeeIdM = "RC-MGR-205";
+  const employeeName = "John Smith";
+  const submittedBy = "John Smith";
+  const managerEmail = "asif.hussain@royalcyber.com";
+  const counter = "TS-2026-W13";
   const [comments, setComments] = useState("");
 
   const [rows, setRows] = useState<TimesheetRow[]>([makeRow()]);
@@ -287,7 +287,6 @@ export default function Timesheet() {
     setSubmitted(false);
     setRows([makeRow()]);
     setComments("");
-    setCounter("");
   }
 
   const isCurrentWeek =
@@ -395,86 +394,100 @@ export default function Timesheet() {
               </div>
               <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 <div className="space-y-1.5">
-                  <Label htmlFor="employeeId" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                    Employee ID <span className="text-red-500">*</span>
+                  <Label htmlFor="employeeId" className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
+                    Employee ID
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200 normal-case tracking-normal">locked</span>
                   </Label>
-                  <Input
-                    id="employeeId"
-                    placeholder="e.g. EMP-12345"
-                    value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
-                    className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      id="employeeId"
+                      value={employeeId}
+                      readOnly
+                      className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed select-none pr-8"
+                    />
+                    <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="employeeName" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                    Employee Name <span className="text-red-500">*</span>
+                  <Label htmlFor="employeeName" className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
+                    Employee Name
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200 normal-case tracking-normal">locked</span>
                   </Label>
-                  <Input
-                    id="employeeName"
-                    placeholder="Full name"
-                    value={employeeName}
-                    onChange={(e) => setEmployeeName(e.target.value)}
-                    className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      id="employeeName"
+                      value={employeeName}
+                      readOnly
+                      className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed select-none pr-8"
+                    />
+                    <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="submittedBy" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                  <Label htmlFor="submittedBy" className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
                     Submitted By
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200 normal-case tracking-normal">locked</span>
                   </Label>
-                  <Input
-                    id="submittedBy"
-                    placeholder="Defaults to employee name"
-                    value={submittedBy}
-                    onChange={(e) => setSubmittedBy(e.target.value)}
-                    className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="submittedBy"
+                      value={submittedBy}
+                      readOnly
+                      className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed select-none pr-8"
+                    />
+                    <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="employeeIdM" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                    Manager Employee ID <span className="text-red-500">*</span>
+                  <Label htmlFor="employeeIdM" className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
+                    Manager Employee ID
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200 normal-case tracking-normal">locked</span>
                   </Label>
-                  <Input
-                    id="employeeIdM"
-                    placeholder="e.g. MGR-98765"
-                    value={employeeIdM}
-                    onChange={(e) => setEmployeeIdM(e.target.value)}
-                    className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      id="employeeIdM"
+                      value={employeeIdM}
+                      readOnly
+                      className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed select-none pr-8"
+                    />
+                    <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="managerEmail" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-                    Manager Email <span className="text-red-500">*</span>
+                  <Label htmlFor="managerEmail" className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
+                    Manager Email
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200 normal-case tracking-normal">locked</span>
                   </Label>
-                  <Input
-                    id="managerEmail"
-                    type="email"
-                    placeholder="manager@company.com"
-                    value={managerEmail}
-                    onChange={(e) => setManagerEmail(e.target.value)}
-                    className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-                    required
-                  />
+                  <div className="relative">
+                    <Input
+                      id="managerEmail"
+                      type="email"
+                      value={managerEmail}
+                      readOnly
+                      className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed select-none pr-8"
+                    />
+                    <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <Label htmlFor="counter" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                  <Label htmlFor="counter" className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
                     Timesheet Counter
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-500 border border-gray-200 normal-case tracking-normal">locked</span>
                   </Label>
-                  <Input
-                    id="counter"
-                    placeholder="Auto-generated if empty"
-                    value={counter}
-                    onChange={(e) => setCounter(e.target.value)}
-                    className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-                  />
+                  <div className="relative">
+                    <Input
+                      id="counter"
+                      value={counter}
+                      readOnly
+                      className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed select-none pr-8"
+                    />
+                    <svg className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  </div>
                 </div>
               </div>
             </div>
