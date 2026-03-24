@@ -1,0 +1,87 @@
+{
+    "type": "object",
+    "properties": {
+        "employeeId": {
+            "type": "string",
+            "description": "Employee ID"
+        },
+        "employeeIdM": {
+            "type": "string",
+            "description": "Manager Employee ID"
+        },
+        "counter": {
+            "type": "string",
+            "description": "Timesheet Counter"
+        },
+        "employeeName": {
+            "type": "string",
+            "description": "Employee full name"
+        },
+        "hours": {
+            "type": "number",
+            "description": "Total hours submitted"
+        },
+        "periodStart": {
+            "type": "string",
+            "description": "Timesheet period start date",
+            "format": "date"
+        },
+        "periodEnd": {
+            "type": "string",
+            "description": "Timesheet period end date",
+            "format": "date"
+        },
+        "project": {
+            "type": "string",
+            "description": "Project name"
+        },
+        "costCenter": {
+            "type": "string",
+            "description": "Cost center"
+        },
+        "attendanceType": {
+            "type": "string",
+            "description": "Billable / Non-Billable"
+        },
+        "timeCode": {
+            "type": "string",
+            "description": "Time code"
+        },
+        "submittedBy": {
+            "type": "string",
+            "description": "Submitter name"
+        },
+        "managerEmail": {
+            "type": "string",
+            "description": "Manager email",
+            "format": "email"
+        },
+        "creationDate": {
+            "type": "string",
+            "description": "Creation Date"
+        },
+        "creationTime": {
+            "type": "string",
+            "description": "Creation Time"
+        },
+        "comments": {
+            "type": "string",
+            "description": "Comments"
+        }
+    },
+    "required": [
+        "employeeId",
+        "employeeIdM",
+        "employeeName",
+        "hours",
+        "periodStart",
+        "periodEnd",
+        "project",
+        "costCenter",
+        "attendanceType",
+        "timeCode",
+        "managerEmail",
+        "creationDate",
+        "creationTime"
+    ]
+}
