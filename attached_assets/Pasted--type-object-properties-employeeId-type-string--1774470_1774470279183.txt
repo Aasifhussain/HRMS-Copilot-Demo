@@ -1,0 +1,84 @@
+{
+    "type": "object",
+    "properties": {
+        "employeeId": {
+            "type": "string",
+            "description": "Employee ID"
+        },
+        "employeeIdM": {
+            "type": "string",
+            "description": "Manager Employee ID"
+        },
+        "counter": {
+            "type": "string",
+            "description": "Leave request counter"
+        },
+        "employeeName": {
+            "type": "string",
+            "description": "Employee full name"
+        },
+        "leaveType": {
+            "type": "string",
+            "description": "Type of leave (Annual, Sick, WFH, etc.)"
+        },
+        "leaveStartDate": {
+            "type": "string",
+            "description": "Leave start date",
+            "format": "date"
+        },
+        "leaveEndDate": {
+            "type": "string",
+            "description": "Leave end date",
+            "format": "date"
+        },
+        "totalDays": {
+            "type": "number",
+            "description": "Total number of leave days"
+        },
+        "reason": {
+            "type": "string",
+            "description": "Reason for leave"
+        },
+        "backupResource": {
+            "type": "string",
+            "description": "Backup resource during leave"
+        },
+        "approvalStatus": {
+            "type": "string",
+            "description": "Approval status (Pending, Approved, Rejected)"
+        },
+        "submittedBy": {
+            "type": "string",
+            "description": "Submitter name"
+        },
+        "managerEmail": {
+            "type": "string",
+            "description": "Manager email",
+            "format": "email"
+        },
+        "creationDate": {
+            "type": "string",
+            "description": "Request creation date"
+        },
+        "creationTime": {
+            "type": "string",
+            "description": "Request creation time"
+        },
+        "comments": {
+            "type": "string",
+            "description": "Additional comments"
+        }
+    },
+    "required": [
+        "employeeId",
+        "employeeIdM",
+        "employeeName",
+        "leaveType",
+        "leaveStartDate",
+        "leaveEndDate",
+        "totalDays",
+        "managerEmail",
+        "creationDate",
+        "creationTime"
+    ]
+}

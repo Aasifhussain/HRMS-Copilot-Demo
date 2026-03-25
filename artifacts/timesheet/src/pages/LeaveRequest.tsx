@@ -18,6 +18,7 @@ const LEAVE_ENDPOINT = "/api/proxy/leave";
 const LEAVE_TYPES = [
   "Annual Leave",
   "Sick Leave",
+  "WFH",
   "Casual Leave",
   "Emergency Leave",
   "Maternity Leave",
@@ -28,9 +29,9 @@ const LEAVE_TYPES = [
 ];
 
 const LOCKED_EMPLOYEE_ID = "RC-10045";
+const LOCKED_EMPLOYEE_ID_M = "RC-MGR-205";
 const LOCKED_EMPLOYEE_NAME = "John Smith";
 const LOCKED_MANAGER_EMAIL = "asif.hussain@royalcyber.com";
-const LOCKED_MANAGER_ID = "RC-MGR-205";
 
 function formatDate(date: Date): string {
   return date.toISOString().split("T")[0];
@@ -90,23 +91,32 @@ export default function LeaveRequest() {
   const today = formatDate(new Date());
 
   const [leaveType, setLeaveType] = useState("");
-  const [startDate, setStartDate] = useState(today);
-  const [endDate, setEndDate] = useState(today);
+  const [leaveStartDate, setLeaveStartDate] = useState(today);
+  const [leaveEndDate, setLeaveEndDate] = useState(today);
   const [reason, setReason] = useState("");
+  const [backupResource, setBackupResource] = useState("");
+  const [counter, setCounter] = useState("");
   const [comments, setComments] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [submittedData, setSubmittedData] = useState<{ leaveType: string; startDate: string; endDate: string; days: number } | null>(null);
+  const [submittedData, setSubmittedData] = useState<{
+    leaveType: string;
+    leaveStartDate: string;
+    leaveEndDate: string;
+    days: number;
+  } | null>(null);
 
-  const businessDays = calcBusinessDays(startDate, endDate);
+  const totalDays = calcBusinessDays(leaveStartDate, leaveEndDate);
 
   function handleReset() {
     setSubmitted(false);
     setSubmittedData(null);
     setLeaveType("");
-    setStartDate(today);
-    setEndDate(today);
+    setLeaveStartDate(today);
+    setLeaveEndDate(today);
     setReason("");
+    setBackupResource("");
+    setCounter("");
     setComments("");
   }
 
@@ -117,16 +127,12 @@ export default function LeaveRequest() {
       toast({ title: "Leave type required", description: "Please select a leave type.", variant: "destructive" });
       return;
     }
-    if (!startDate || !endDate) {
+    if (!leaveStartDate || !leaveEndDate) {
       toast({ title: "Dates required", description: "Please select start and end dates.", variant: "destructive" });
       return;
     }
-    if (new Date(endDate) < new Date(startDate)) {
+    if (new Date(leaveEndDate) < new Date(leaveStartDate)) {
       toast({ title: "Invalid date range", description: "End date must be on or after start date.", variant: "destructive" });
-      return;
-    }
-    if (!reason.trim()) {
-      toast({ title: "Reason required", description: "Please provide a reason for the leave.", variant: "destructive" });
       return;
     }
 
@@ -135,19 +141,21 @@ export default function LeaveRequest() {
 
     const payload = {
       employeeId: LOCKED_EMPLOYEE_ID,
+      employeeIdM: LOCKED_EMPLOYEE_ID_M,
+      counter: counter.trim() || `LR-${Date.now()}`,
       employeeName: LOCKED_EMPLOYEE_NAME,
-      managerId: LOCKED_MANAGER_ID,
-      managerEmail: LOCKED_MANAGER_EMAIL,
-      submittedBy: LOCKED_EMPLOYEE_NAME,
       leaveType,
-      startDate,
-      endDate,
-      numberOfDays: businessDays,
+      leaveStartDate,
+      leaveEndDate,
+      totalDays,
       reason: reason.trim(),
-      comments: comments.trim(),
-      status: "Pending",
+      backupResource: backupResource.trim(),
+      approvalStatus: "Pending",
+      submittedBy: LOCKED_EMPLOYEE_NAME,
+      managerEmail: LOCKED_MANAGER_EMAIL,
       creationDate,
       creationTime,
+      comments: comments.trim(),
     };
 
     try {
@@ -160,14 +168,15 @@ export default function LeaveRequest() {
       });
 
       if (res.ok || res.status === 200 || res.status === 202) {
-        setSubmittedData({ leaveType, startDate, endDate, days: businessDays });
+        setSubmittedData({ leaveType, leaveStartDate, leaveEndDate, days: totalDays });
         setSubmitted(true);
         toast({
           title: "Leave request submitted!",
           description: `Your ${leaveType} request has been sent to your manager.`,
         });
       } else {
-        throw new Error(`HTTP ${res.status}`);
+        const body = await res.text();
+        throw new Error(`HTTP ${res.status}: ${body}`);
       }
     } catch (err) {
       toast({
@@ -193,8 +202,9 @@ export default function LeaveRequest() {
           Your <strong>{submittedData.leaveType}</strong> request has been sent to your manager.
         </p>
         <p className="text-gray-500 mb-2">
-          Period: <strong className="text-gray-800">{submittedData.startDate}</strong> to{" "}
-          <strong className="text-gray-800">{submittedData.endDate}</strong>
+          Period:{" "}
+          <strong className="text-gray-800">{submittedData.leaveStartDate}</strong> to{" "}
+          <strong className="text-gray-800">{submittedData.leaveEndDate}</strong>
         </p>
         <p className="text-gray-500 mb-8">
           Business days: <strong className="text-gray-800">{submittedData.days}</strong>
@@ -229,7 +239,7 @@ export default function LeaveRequest() {
           <Button
             type="submit"
             disabled={submitting}
-            className="bg-[#e07800] hover:bg-[#c96900] text-white min-w-[120px]"
+            className="bg-[#e07800] hover:bg-[#c96900] text-white min-w-[140px]"
           >
             {submitting ? (
               <span className="flex items-center gap-2">
@@ -259,6 +269,15 @@ export default function LeaveRequest() {
           </div>
           <div className="space-y-1.5">
             <Label className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
+              Manager Employee ID <LockedBadge />
+            </Label>
+            <div className="relative">
+              <Input value={LOCKED_EMPLOYEE_ID_M} readOnly className="bg-gray-50 border-gray-200 text-gray-700 cursor-not-allowed pr-8" />
+              <LockIcon />
+            </div>
+          </div>
+          <div className="space-y-1.5">
+            <Label className="text-xs font-semibold text-gray-600 uppercase tracking-wide flex items-center gap-1.5">
               Employee Name <LockedBadge />
             </Label>
             <div className="relative">
@@ -275,6 +294,18 @@ export default function LeaveRequest() {
               <LockIcon />
             </div>
           </div>
+          <div className="space-y-1.5">
+            <Label htmlFor="counter" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+              Leave Counter
+            </Label>
+            <Input
+              id="counter"
+              placeholder="Auto-generated if empty"
+              value={counter}
+              onChange={(e) => setCounter(e.target.value)}
+              className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
+            />
+          </div>
         </div>
       </div>
 
@@ -284,8 +315,9 @@ export default function LeaveRequest() {
           <h2 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">Leave Details</h2>
         </div>
         <div className="px-6 py-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
           {/* Leave Type */}
-          <div className="space-y-1.5 lg:col-span-1">
+          <div className="space-y-1.5">
             <Label htmlFor="leaveType" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
               Leave Type <span className="text-red-500">*</span>
             </Label>
@@ -303,16 +335,16 @@ export default function LeaveRequest() {
 
           {/* Start Date */}
           <div className="space-y-1.5">
-            <Label htmlFor="startDate" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+            <Label htmlFor="leaveStartDate" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
               Start Date <span className="text-red-500">*</span>
             </Label>
             <Input
-              id="startDate"
+              id="leaveStartDate"
               type="date"
-              value={startDate}
+              value={leaveStartDate}
               onChange={(e) => {
-                setStartDate(e.target.value);
-                if (e.target.value > endDate) setEndDate(e.target.value);
+                setLeaveStartDate(e.target.value);
+                if (e.target.value > leaveEndDate) setLeaveEndDate(e.target.value);
               }}
               className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
               required
@@ -321,36 +353,50 @@ export default function LeaveRequest() {
 
           {/* End Date */}
           <div className="space-y-1.5">
-            <Label htmlFor="endDate" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+            <Label htmlFor="leaveEndDate" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
               End Date <span className="text-red-500">*</span>
             </Label>
             <Input
-              id="endDate"
+              id="leaveEndDate"
               type="date"
-              value={endDate}
-              min={startDate}
-              onChange={(e) => setEndDate(e.target.value)}
+              value={leaveEndDate}
+              min={leaveStartDate}
+              onChange={(e) => setLeaveEndDate(e.target.value)}
               className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
               required
             />
           </div>
 
-          {/* Duration */}
+          {/* Total Days */}
           <div className="space-y-1.5">
             <Label className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-              Business Days
+              Total Business Days
             </Label>
             <div className={`h-10 px-3 flex items-center rounded-md border text-sm font-semibold
-              ${businessDays > 0 ? "bg-orange-50 border-[#e07800]/30 text-[#e07800]" : "bg-gray-50 border-gray-200 text-gray-400"}
+              ${totalDays > 0 ? "bg-orange-50 border-[#e07800]/30 text-[#e07800]" : "bg-gray-50 border-gray-200 text-gray-400"}
             `}>
-              {businessDays > 0 ? `${businessDays} day${businessDays !== 1 ? "s" : ""}` : "–"}
+              {totalDays > 0 ? `${totalDays} day${totalDays !== 1 ? "s" : ""}` : "–"}
             </div>
           </div>
 
+          {/* Backup Resource */}
+          <div className="space-y-1.5">
+            <Label htmlFor="backupResource" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+              Backup Resource
+            </Label>
+            <Input
+              id="backupResource"
+              placeholder="Name of backup colleague"
+              value={backupResource}
+              onChange={(e) => setBackupResource(e.target.value)}
+              className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
+            />
+          </div>
+
           {/* Reason */}
-          <div className="space-y-1.5 sm:col-span-2 lg:col-span-2">
+          <div className="space-y-1.5">
             <Label htmlFor="reason" className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
-              Reason <span className="text-red-500">*</span>
+              Reason
             </Label>
             <Input
               id="reason"
@@ -358,13 +404,12 @@ export default function LeaveRequest() {
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               className="border-gray-300 focus:border-[#e07800] focus:ring-[#e07800]/20"
-              required
             />
           </div>
         </div>
       </div>
 
-      {/* Leave Balance Info Banner */}
+      {/* Info Banner */}
       {leaveType && (
         <div className="bg-blue-50 border border-blue-100 rounded-lg px-5 py-4 flex items-start gap-3">
           <svg className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -372,7 +417,7 @@ export default function LeaveRequest() {
           </svg>
           <div className="text-sm text-blue-700">
             <span className="font-semibold">{leaveType}</span> — Your request will be routed to{" "}
-            <span className="font-medium">asif.hussain@royalcyber.com</span> for approval. You will receive a notification once it is reviewed.
+            <span className="font-medium">{LOCKED_MANAGER_EMAIL}</span> for approval. You will receive a notification once it is reviewed.
           </div>
         </div>
       )}
