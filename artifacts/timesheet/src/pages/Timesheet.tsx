@@ -20,7 +20,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Spinner } from "@/components/ui/spinner";
-import { Plus, Trash2, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { Plus, Trash2, Clock, ChevronLeft, ChevronRight, CalendarDays, ClipboardList } from "lucide-react";
+import LeaveRequest from "./LeaveRequest";
 
 const API_ENDPOINT =
   "https://defaultd508624fa0b74fd3951105b18ca027.84.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d419424dcb78497fa8988d5a8e465792/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=DW34F2ORKLfJ7Vi_J2r7GX5Eg32vkbYgD23G-1VlG8U";
@@ -142,6 +143,7 @@ function grandTotal(rows: TimesheetRow[]): number {
 
 export default function Timesheet() {
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState<"timesheet" | "leave">("timesheet");
 
   const today = new Date();
   const [weekStart, setWeekStart] = useState(() => getWeekStart(today));
@@ -322,12 +324,48 @@ export default function Timesheet() {
           <span>/</span>
           <span className="text-[#e07800] font-medium cursor-pointer hover:underline">Time</span>
           <span>/</span>
-          <span className="text-gray-700 font-medium">Enter Time</span>
+          <span className="text-gray-700 font-medium">
+            {activeTab === "timesheet" ? "Enter Time" : "Leave Request"}
+          </span>
+        </div>
+      </div>
+
+      {/* Tab Navigation */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex gap-0">
+            <button
+              type="button"
+              onClick={() => setActiveTab("timesheet")}
+              className={`flex items-center gap-2 px-5 py-3.5 text-sm font-medium border-b-2 transition-colors
+                ${activeTab === "timesheet"
+                  ? "border-[#e07800] text-[#e07800]"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+            >
+              <ClipboardList className="h-4 w-4" />
+              Timesheet Entry
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab("leave")}
+              className={`flex items-center gap-2 px-5 py-3.5 text-sm font-medium border-b-2 transition-colors
+                ${activeTab === "leave"
+                  ? "border-[#e07800] text-[#e07800]"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                }`}
+            >
+              <CalendarDays className="h-4 w-4" />
+              Leave Request
+            </button>
+          </div>
         </div>
       </div>
 
       <main className="max-w-7xl mx-auto px-6 py-6">
-        {submitted ? (
+        {activeTab === "leave" ? (
+          <LeaveRequest />
+        ) : submitted ? (
           <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-12 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
