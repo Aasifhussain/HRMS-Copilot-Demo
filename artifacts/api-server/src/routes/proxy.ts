@@ -1,4 +1,5 @@
 import { Router, type IRouter } from "express";
+import { logger } from "../lib/logger";
 
 const router: IRouter = Router();
 
@@ -24,7 +25,7 @@ router.post("/proxy/timesheet", async (req, res) => {
     const text = await response.text();
     res.status(response.status).send(text || "{}");
   } catch (err) {
-    req.log.error({ err }, "Timesheet proxy error");
+    logger.error({ err }, "Timesheet proxy error");
     res.status(502).json({ error: "Failed to reach timesheet endpoint" });
   }
 });
@@ -43,7 +44,7 @@ router.post("/proxy/leave", async (req, res) => {
     const text = await response.text();
     res.status(response.status).send(text || "{}");
   } catch (err) {
-    req.log.error({ err }, "Leave proxy error");
+    logger.error({ err }, "Leave proxy error");
     res.status(502).json({ error: "Failed to reach leave endpoint" });
   }
 });
