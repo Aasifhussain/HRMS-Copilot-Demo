@@ -23,9 +23,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { Plus, Trash2, Clock, ChevronLeft, ChevronRight, CalendarDays, ClipboardList } from "lucide-react";
 import LeaveRequest from "./LeaveRequest";
 
-const API_ENDPOINT =
-  "https://defaultd508624fa0b74fd3951105b18ca027.84.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/d419424dcb78497fa8988d5a8e465792/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=DW34F2ORKLfJ7Vi_J2r7GX5Eg32vkbYgD23G-1VlG8U";
-const API_KEY = "G2JylRhOWQ8Xa0Z5OmCI7W9DfLXJCYPA";
+const API_ENDPOINT = "/api/proxy/timesheet";
 
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const DAYS_FULL = [
@@ -260,7 +258,6 @@ export default function Timesheet() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": API_KEY,
         },
         body: JSON.stringify(payload),
       });
