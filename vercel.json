@@ -1,0 +1,10 @@
+{
+  "buildCommand": "pnpm install && pnpm --filter @workspace/timesheet run build",
+  "outputDirectory": "artifacts/timesheet/dist/public",
+  "rewrites": [
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
