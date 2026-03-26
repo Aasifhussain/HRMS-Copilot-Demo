@@ -50,3 +50,5 @@ Thumbs.db
 
 # Vercel build output (generated during build, not committed)
 .vercel/output
+public
+.vercel/output

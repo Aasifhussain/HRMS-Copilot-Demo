@@ -5,7 +5,7 @@
   "scripts": {
     "preinstall": "sh -c 'rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
-    "vercel-build": "pnpm --filter @workspace/timesheet run build && mkdir -p .vercel/output/static && cp -r artifacts/timesheet/dist/public/. .vercel/output/static/ && echo '{\"version\":3,\"routes\":[{\"handle\":\"filesystem\"},{\"src\":\"/(.*)\",\"dest\":\"/index.html\"}]}' > .vercel/output/config.json",
+    "vercel-build": "pnpm --filter @workspace/timesheet run build && rm -rf public && mkdir -p public && cp -r artifacts/timesheet/dist/public/. public/ && cp public/index.html public/404.html",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
   },
