@@ -13,7 +13,9 @@ import {
 } from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 
-const LEAVE_ENDPOINT = "/api/proxy/leave";
+const API_KEY = "G2JylRhOWQ8Xa0Z5OmCI7W9DfLXJCYPA";
+const LEAVE_ENDPOINT =
+  "https://defaultd508624fa0b74fd3951105b18ca027.84.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/e6b3ef6685da42d49073363642d020eb/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=FjKe83SFE8Jg6ZM2EVMad4qMEtGzvu4nmhgGLGJ9x_0";
 
 const LEAVE_TYPES = [
   "Annual Leave",
@@ -163,6 +165,7 @@ export default function LeaveRequest() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": API_KEY,
         },
         body: JSON.stringify(payload),
       });
