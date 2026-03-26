@@ -1,5 +1,5 @@
 {
-  "buildCommand": "pnpm install && pnpm --filter @workspace/timesheet run build",
+  "buildCommand": "pnpm run vercel-build",
   "outputDirectory": "artifacts/timesheet/dist/public",
   "rewrites": [
     {
