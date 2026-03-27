@@ -20,7 +20,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Spinner } from "@/components/ui/spinner";
-import { Plus, Trash2, Clock, ChevronLeft, ChevronRight, CalendarDays, ClipboardList } from "lucide-react";
+import { Plus, Trash2, ChevronLeft, ChevronRight, CalendarDays, ClipboardList } from "lucide-react";
+import workdayLogo from "@assets/129-1291610_workday-logo-workday-logo-png-transparent-png_1774639736661.png";
 import LeaveRequest from "./LeaveRequest";
 
 const API_KEY = "G2JylRhOWQ8Xa0Z5OmCI7W9DfLXJCYPA";
@@ -300,10 +301,7 @@ export default function Timesheet() {
       <header className="bg-[#e07800] text-white">
         <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              <span className="font-semibold text-lg tracking-wide">Workday</span>
-            </div>
+            <img src={workdayLogo} alt="Workday" className="h-8 w-auto" />
             <span className="text-orange-200 text-sm">Time Tracking</span>
           </div>
           <div className="text-sm text-orange-100">
