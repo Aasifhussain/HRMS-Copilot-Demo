@@ -1,4 +1,4 @@
-export type ThemeId = "workday" | "sap-fiori" | "sap-s4hana" | "oracle-fusion";
+export type ThemeId = "workday" | "sap-fiori" | "sap-ecc" | "oracle-fusion";
 
 export interface AppTheme {
   id: ThemeId;
@@ -47,20 +47,20 @@ export const THEMES: Record<ThemeId, AppTheme> = {
     sectionHeaderBg: "#f7f7f7",
     tableHeaderBg: "#f7f7f7",
   },
-  "sap-s4hana": {
-    id: "sap-s4hana",
-    name: "SAP S/4HANA",
-    headerBg: "#1b2a3b",
+  "sap-ecc": {
+    id: "sap-ecc",
+    name: "SAP ECC (SAP GUI)",
+    headerBg: "#1e5fa8",
     headerText: "#ffffff",
     headerSubText: "#8fa3b3",
-    bodyBg: "#edeff0",
-    primary: "#0854a0",
-    primaryHover: "#06418a",
+    bodyBg: "#f0f4f8",
+    primary: "#0054a6",
+    primaryHover: "#003f7d",
     primaryLight: "#e3f0ff",
-    primaryLightBorder: "rgba(8,84,160,0.3)",
-    breadcrumbText: "#0854a0",
-    sectionHeaderBg: "#f0f2f3",
-    tableHeaderBg: "#f0f2f3",
+    primaryLightBorder: "rgba(0,84,166,0.3)",
+    breadcrumbText: "#0054a6",
+    sectionHeaderBg: "#dce3ec",
+    tableHeaderBg: "#dce3ec",
   },
   "oracle-fusion": {
     id: "oracle-fusion",
@@ -74,8 +74,8 @@ export const THEMES: Record<ThemeId, AppTheme> = {
     primaryLight: "#fff1f0",
     primaryLightBorder: "rgba(199,70,52,0.3)",
     breadcrumbText: "#c74634",
-    sectionHeaderBg: "#f8f8f8",
-    tableHeaderBg: "#f5f5f5",
+    sectionHeaderBg: "#faf9f9",
+    tableHeaderBg: "#f4f4f4",
   },
 };
 
@@ -90,7 +90,5 @@ export function loadTheme(): ThemeId {
 }
 
 export function saveTheme(id: ThemeId) {
-  try {
-    localStorage.setItem("app-theme", id);
-  } catch {}
+  try { localStorage.setItem("app-theme", id); } catch {}
 }
