@@ -1,4 +1,4 @@
-export type ThemeId = "workday" | "sap-fiori" | "sap-ecc" | "oracle-fusion";
+export type ThemeId = "workday" | "sap-s4hana" | "sap-ecc" | "oracle-fusion";
 
 export interface AppTheme {
   id: ThemeId;
@@ -32,10 +32,10 @@ export const THEMES: Record<ThemeId, AppTheme> = {
     sectionHeaderBg: "#f8f8f8",
     tableHeaderBg: "#f8f8f8",
   },
-  "sap-fiori": {
-    id: "sap-fiori",
-    name: "SAP Fiori",
-    headerBg: "#354a5e",
+  "sap-s4hana": {
+    id: "sap-s4hana",
+    name: "SAP S/4HANA",
+    headerBg: "#1d2d3e",
     headerText: "#ffffff",
     headerSubText: "#a0aec0",
     bodyBg: "#f2f2f2",
