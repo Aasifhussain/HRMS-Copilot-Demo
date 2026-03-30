@@ -172,25 +172,45 @@ function FioriPage({ state }: { state: PageState }) {
   const p = "#0070f2";
   return (
     <div style={{ background: "#f2f2f2", minHeight: "100vh", fontFamily: "'72', '72full', Arial, sans-serif", display: "flex", flexDirection: "column" }}>
-      {/* SAP Shell Bar */}
-      <div style={{ background: "#354a5e", height: "44px", display: "flex", alignItems: "center", padding: "0 8px", gap: "0", flexShrink: 0 }}>
-        <button style={{ width: "44px", height: "44px", background: "none", border: "none", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>≡</button>
-        <div style={{ display: "flex", alignItems: "center", gap: "4px", marginRight: "16px" }}>
-          <svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="14" fill="#0070f2"/><text x="4" y="19" fontSize="11" fontWeight="bold" fill="white" fontFamily="Arial">SAP</text></svg>
+      {/* SAP Fiori Shell Bar */}
+      <div style={{ background: "#354a5e", height: "44px", display: "flex", alignItems: "center", padding: "0 4px", gap: "0", flexShrink: 0 }}>
+        {/* Hamburger */}
+        <button style={{ width: "44px", height: "44px", background: "none", border: "none", color: "white", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg viewBox="0 0 18 18" width="18" height="18" fill="white"><rect y="2" width="18" height="2"/><rect y="8" width="18" height="2"/><rect y="14" width="18" height="2"/></svg>
+        </button>
+        {/* SAP Logo — official wordmark */}
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginLeft: "4px", marginRight: "4px" }}>
+          <svg viewBox="0 0 56 22" width="56" height="22" aria-label="SAP">
+            {/* S */}
+            <path d="M1 15.5c1.2 2.5 3.8 4 6.8 4 4.2 0 7-2.2 7-5.5 0-3-2.2-4.5-5.8-5.8C6.5 7.2 5 6.2 5 4.5 5 3 6.3 2 8.2 2c1.6 0 3 .8 4 2.2l2.5-2C13 .8 10.8 0 8.2 0 4.5 0 2 2.2 2 5.2c0 2.8 2 4.3 5.3 5.5 2.5.9 4.2 1.8 4.2 3.8 0 1.8-1.5 3-3.8 3-2 0-3.8-1-4.8-2.8L1 15.5z" fill="white"/>
+            {/* A */}
+            <path d="M24 0h-2.5L16 20h3l1.2-3.8h5.8L27.2 20h3L24 0zm-3 13.5l2-6.3 2 6.3h-4z" fill="white"/>
+            {/* P */}
+            <path d="M31 0v20h3V13h3.5c4 0 6.5-2.5 6.5-6.5S41.5 0 37.5 0H31zm3 10.5V2.5h3.5c2.3 0 3.5 1.3 3.5 4s-1.2 4-3.5 4H34z" fill="white"/>
+          </svg>
+          <div style={{ height: "20px", width: "1px", background: "rgba(255,255,255,0.3)" }} />
+          <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "13px", fontWeight: "500", letterSpacing: "0.02em" }}>S/4HANA</span>
         </div>
-        <div style={{ height: "28px", width: "1px", background: "rgba(255,255,255,0.2)", marginRight: "12px" }} />
+        <div style={{ height: "28px", width: "1px", background: "rgba(255,255,255,0.2)", marginRight: "12px", marginLeft: "4px" }} />
+        {/* App title */}
         <span style={{ color: "white", fontSize: "14px", fontWeight: "600", letterSpacing: "0.01em" }}>
           {activeTab === "timesheet" ? "My Timesheet" : "Leave Request"}
         </span>
         <div style={{ flex: 1 }} />
         {/* Search */}
-        <button style={{ width: "44px", height: "44px", background: "none", border: "none", color: "rgba(255,255,255,0.7)", cursor: "pointer", fontSize: "18px" }}>🔍</button>
-        {/* Notification */}
-        <button style={{ width: "44px", height: "44px", background: "none", border: "none", color: "rgba(255,255,255,0.7)", cursor: "pointer", fontSize: "16px" }}>🔔</button>
-        {/* Product Switch */}
-        <button style={{ width: "44px", height: "44px", background: "none", border: "none", color: "rgba(255,255,255,0.7)", cursor: "pointer", fontSize: "16px" }}>⊞</button>
-        {/* User */}
-        <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#0070f2", border: "2px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "12px", fontWeight: "bold", cursor: "pointer", marginLeft: "4px" }}>JS</div>
+        <button title="Search" style={{ width: "44px", height: "44px", background: "none", border: "none", color: "rgba(255,255,255,0.75)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg viewBox="0 0 18 18" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M12 12l4 4" strokeLinecap="round"/></svg>
+        </button>
+        {/* Notifications */}
+        <button title="Notifications" style={{ width: "44px", height: "44px", background: "none", border: "none", color: "rgba(255,255,255,0.75)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg viewBox="0 0 18 18" width="18" height="18" fill="currentColor"><path d="M9 1a1 1 0 011 1v.5A5.5 5.5 0 0115.5 8v3.5l1.5 1.5v.5H1v-.5L2.5 11.5V8A5.5 5.5 0 018 2.5V2a1 1 0 011-1zM7.5 15.5h3a1.5 1.5 0 01-3 0z"/></svg>
+        </button>
+        {/* Grid/Launchpad */}
+        <button title="Launchpad" style={{ width: "44px", height: "44px", background: "none", border: "none", color: "rgba(255,255,255,0.75)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg viewBox="0 0 18 18" width="18" height="18" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="11" y="1" width="6" height="6" rx="1"/><rect x="1" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg>
+        </button>
+        {/* User avatar */}
+        <div title="John Smith" style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#0070f2", border: "2px solid rgba(255,255,255,0.35)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontSize: "11px", fontWeight: "700", cursor: "pointer", marginLeft: "4px", marginRight: "4px", letterSpacing: "0.03em" }}>JS</div>
       </div>
 
       {/* Dynamic Page Header */}
@@ -1130,7 +1150,7 @@ export default function Timesheet() {
     employeeId, employeeIdM, employeeName, submittedBy, managerEmail, setManagerEmail, counter,
   };
 
-  if (themeId === "sap-fiori") return <FioriPage state={pageState} />;
+  if (themeId === "sap-s4hana") return <FioriPage state={pageState} />;
   if (themeId === "sap-ecc") return <ECCPage state={pageState} />;
   if (themeId === "oracle-fusion") return <OraclePage state={pageState} />;
   return <WorkdayPage state={pageState} />;
